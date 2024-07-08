@@ -8,11 +8,11 @@ const bucketRouter = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'assets/images/'); // Specify the destination folder for file uploads
+    cb(null, 'assets/images/'); 
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname); // Extract the file extension
-    cb(null, Date.now() + ext); // Use current timestamp as filename (with original extension)
+    const ext = path.extname(file.originalname); 
+    cb(null, Date.now() + ext);
   }
 });
 

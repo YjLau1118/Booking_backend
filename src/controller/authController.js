@@ -99,7 +99,7 @@ const authController = {
         }
 
         const newAccessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: '15m' // 15分钟
+          expiresIn: '15m' 
         });
 
         res.cookie('access_token', newAccessToken, {
@@ -134,7 +134,7 @@ const authController = {
 
       const pin = generatePin();
       user.passwordResetPin = pin;
-      user.passwordResetExpires = Date.now() + 3600000; // 1 hour
+      user.passwordResetExpires = Date.now() + 3600000;
       await user.save();
 
       const transporter = nodemailer.createTransport({
@@ -228,7 +228,7 @@ const authController = {
       user.password = await bcrypt.hash(req.body.password, saltRounds);
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
-      user.pinVerified = undefined; // Remove the flag after password reset
+      user.pinVerified = undefined; 
       await user.save();
 
       res.status(200).json({

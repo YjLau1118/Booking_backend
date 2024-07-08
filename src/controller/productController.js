@@ -2,7 +2,7 @@ import productModel from "../database/schema/productSchema.js";
 
 const productController = {
   async createProduct(req, res) {
-    const { isAdmin } = req.user; // Assuming isAdmin is set in req.user from JWT
+    const { isAdmin } = req.user;
     if (!isAdmin) {
       return res.status(404).json({
         status: 'Error',

@@ -8,17 +8,14 @@ const bucketController = {
         return res.status(400).json({ message: 'Please upload a file' });
       }
 
-      // Read the file as base64
       const imageData = fs.readFileSync(req.file.path, 'base64');
-      const mimeType = req.file.mimetype; // Get MIME type of the file
+      const mimeType = req.file.mimetype; 
 
-      // Create a new bucket document
       const newBucket = new bucketModel({
         imageName: req.file.originalname,
-        imageData: `data:${mimeType};base64,${imageData}` // Save image data with MIME type prefix
+        imageData: `data:${mimeType};base64,${imageData}` 
       });
 
-      // Save to MongoDB
       await newBucket.save();
 
       res.status(201).json({ status: 'Success',message: 'File uploaded successfully', data: newBucket });
@@ -37,7 +34,6 @@ const bucketController = {
         return res.status(404).json({  status: 'Error', message: 'Image not found' });
       }
 
-      // Assuming the image data is stored in 'imageData' field in base64 format
       res.status(200).json({  
         status: 'Success',
         message: 'Get image detail successfully',
