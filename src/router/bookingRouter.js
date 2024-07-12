@@ -7,4 +7,6 @@ const bookingRouter = express.Router();
 bookingRouter.post("/create", verifyToken, bookingController.createBooking);
 bookingRouter.get("/list", verifyToken, bookingController.getBookingList);
 bookingRouter.get("/allbooking", verifyToken, bookingController.getAllBookings)
+bookingRouter.get("/details/:id", verifyToken, bookingController.getBookingById)
+
 export default bookingRouter;

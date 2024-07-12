@@ -53,7 +53,7 @@ const productController = {
 
  async getProductList(req, res) {
   try {
-    const { page = 1, size = 10, sortBy = 'productName', sortOrder = 'asc', searchField, searchQuery, filter, filterId, minPrice, maxPrice } = req.query;
+    const { page = 1, size = 10, sortBy = 'productName', sortOrder = 'asc', searchField, searchQuery, filters, minPrice, maxPrice } = req.query;
 
     let query = {};
     if (searchField && searchQuery) {
@@ -62,8 +62,20 @@ const productController = {
         [field]: { $regex: searchQuery, $options: 'i' }  
       }));
     }
-    if (filter && filterId) {
-      query[filterId] = filter;  
+    if (filters) {
+      let filterParam = filters;
+
+      if (filterParam.startsWith('or:')) {
+        filterParam = filterParam.substring(3); // Remove 'or:'
+        const filterValues = filterParam.split(',');
+        query.$and = filterValues.map(value => {
+          const [filterId, filterValue] = value.split(':');
+          return { [filterId]: filterValue };
+        });
+      } else {
+        const [filterId, filterValue] = filterParam.split(':');
+        query[filterId] = filterValue;
+      }
     }
 
     if (minPrice && maxPrice) {
@@ -99,8 +111,7 @@ const productController = {
       error: err.message
     });
   }
-}
-,
+},
 
   async updateProduct (req, res) {
     try {

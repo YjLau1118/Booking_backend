@@ -9,6 +9,10 @@ const productSchema = new Schema({
     type: String,
     required: [true, "product brand is needed"]
   },
+  productModel: {
+    type: String,
+    required: [true, "product model is needed"]
+  },
   productPlate: {
     type: String,
     required: [true, "product plate is needed"]
@@ -17,12 +21,20 @@ const productSchema = new Schema({
     type: [String],
     required: [true, "product image is needed"]
   },
+  productVariant: {
+    type: String,
+    required: false
+  },
+  productSeries: {
+    type: String,
+    required: false
+  },
   productType: {
     type: String,
     required: [true, "product type is needed"]
   },
   productSeat: {
-    type: String,
+    type: Number,
     required: false
   },
   productManufacturingYear: {
@@ -33,11 +45,17 @@ const productSchema = new Schema({
     type: String,
     required: [true, "product mode is needed"]
   },
+  productFuelType: {
+    type: String,
+    required: [true, "product fuel type is needed"]
+  },
   productPricePerDay: {
     type: Number,
     required: [true, "product price is needed"]
   }
 });
+
+
 
 const productModel = model("products", productSchema);
 

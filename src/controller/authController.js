@@ -35,7 +35,7 @@ const authController = {
     }
   },
 
-  async login(req, res) {
+  async login(req, res, next) {
     try{
       const user = await userModel.findOne({email: req.body.email});
       if(!user) {
@@ -52,7 +52,7 @@ const authController = {
         });
       }
       const accessToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '15m'
+        expiresIn: '1d'
       });
 
       const refreshToken = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.REFRESH_TOKEN_SECRET, {
@@ -82,6 +82,7 @@ const authController = {
 
   async refreshToken(req, res) {
     const refreshToken = req.cookies.refresh_token;
+    console.log('refresh token',refreshToken)
     if (!refreshToken) {
       return res.status(401).json({ status: 'Error', message: 'Unauthorized' });
     }
