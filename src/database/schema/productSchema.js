@@ -35,7 +35,7 @@ const productSchema = new Schema({
   },
   productSeat: {
     type: Number,
-    required: false
+    required: [true, "product seat is needed"]
   },
   productManufacturingYear: {
     type: Number,
